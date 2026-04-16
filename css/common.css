@@ -68,6 +68,7 @@ ul { list-style: none; }
   letter-spacing: 0.01em;
 }
 .site-nav__logo a { color: var(--c-ink); }
+.site-nav__logo a > span:first-child { color: var(--c-accent); }
 .site-nav__badge {
   font-family: var(--f-sans);
   font-size: 10px;
