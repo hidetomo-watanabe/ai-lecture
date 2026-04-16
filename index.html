@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude講座 | AIで仕事の「めんどくさい」をなくそう</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a1a;
+  --ink-muted: #6b6b6b;
+  --ink-faint: #b0b0b0;
+  --bg: #fafaf8;
+  --bg2: #f3f3ef;
+  --bg3: #eaeae4;
+  --accent: #2a52a0;
+  --accent-light: #e8eef9;
+  --accent2: #c84b2f;
+  --green: #1a7a4a;
+  --green-light: #e6f4ec;
+  --border: rgba(26,26,26,0.1);
+  --border-strong: rgba(26,26,26,0.2);
+  --radius: 12px;
+  --radius-sm: 6px;
+  --sans: 'Noto Sans JP', sans-serif;
+  --serif: 'DM Serif Display', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { font-family: var(--serif); font-size: 18px; color: var(--ink); text-decoration: none; }
+.nav-logo span { color: var(--accent); }
+.nav-cta {
+  background: var(--accent); color: #fff;
+  padding: 7px 18px; border-radius: 30px;
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.nav-cta:hover { background: #1e3f80; transform: translateY(-1px); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center;
+  padding: 100px 2rem 4rem;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.04;
+  background-image: linear-gradient(var(--ink) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--ink) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--accent-light); color: var(--accent);
+  font-size: 12px; font-weight: 500; letter-spacing: 0.06em;
+  padding: 5px 14px; border-radius: 30px;
+  border: 1px solid rgba(42,82,160,0.2);
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.6s 0.1s ease forwards;
+}
+.hero-title {
+  font-family: var(--serif); font-size: clamp(36px, 6vw, 72px);
+  line-height: 1.15; letter-spacing: -0.01em; color: var(--ink);
+  margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 0.7s 0.25s ease forwards;
+}
+.hero-title em { font-style: italic; color: var(--accent); }
+.hero-sub {
+  font-size: clamp(15px, 2vw, 18px); color: var(--ink-muted);
+  max-width: 560px; margin: 0 auto 2.5rem;
+  font-weight: 300; line-height: 1.8;
+  opacity: 0; animation: fadeUp 0.7s 0.4s ease forwards;
+}
+.hero-btns {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp 0.7s 0.55s ease forwards;
+}
+.btn-primary {
+  background: var(--accent); color: #fff;
+  padding: 14px 32px; border-radius: 40px;
+  font-size: 15px; font-weight: 500; text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(42,82,160,0.25);
+}
+.btn-primary:hover { background: #1e3f80; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(42,82,160,0.3); }
+.btn-secondary {
+  background: transparent; color: var(--ink);
+  padding: 14px 32px; border-radius: 40px;
+  font-size: 15px; font-weight: 400; text-decoration: none;
+  border: 1px solid var(--border-strong);
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-secondary:hover { background: var(--bg2); transform: translateY(-2px); }
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  opacity: 0; animation: fadeUp 0.6s 1s ease forwards;
+  font-size: 12px; color: var(--ink-faint); letter-spacing: 0.08em;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.hero-scroll-line {
+  width: 1px; height: 36px; background: var(--ink-faint);
+  animation: scrollLine 1.8s 1.5s ease infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ── SECTION BASE ── */
+section { padding: 6rem 2rem; }
+.container { max-width: 900px; margin: 0 auto; }
+.section-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 1rem;
+}
+.section-title {
+  font-family: var(--serif); font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.2; color: var(--ink); margin-bottom: 1rem;
+}
+.section-sub {
+  font-size: 16px; color: var(--ink-muted); max-width: 560px;
+  font-weight: 300; line-height: 1.8; margin-bottom: 3rem;
+}
+hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+/* ── PAIN ── */
+#pain { background: var(--bg); }
+.pain-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.pain-item {
+  background: var(--bg); padding: 1.5rem;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.pain-check {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent-light); border: 1.5px solid var(--accent);
+  flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+}
+.pain-check::after {
+  content: ''; display: block;
+  width: 5px; height: 9px;
+  border-right: 1.5px solid var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+  transform: rotate(45deg) translate(-1px,-1px);
+}
+.pain-text { font-size: 14px; color: var(--ink); line-height: 1.65; }
+
+/* ── WHAT ── */
+#what { background: var(--bg2); }
+.what-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.what-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.what-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.07); }
+.what-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--accent-light); margin-bottom: 1rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.what-icon svg { width: 20px; height: 20px; }
+.what-card-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+.what-card-body { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
+
+/* ── DEMO ── */
+#demo { background: var(--bg); }
+.demo-tabs {
+  display: flex; gap: 4px;
+  background: var(--bg2); border-radius: 10px; padding: 4px;
+  margin-bottom: 2rem; width: fit-content;
+}
+.demo-tab {
+  padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 500;
+  cursor: pointer; border: none; background: transparent; color: var(--ink-muted);
+  transition: background 0.2s, color 0.2s;
+}
+.demo-tab.active { background: var(--bg); color: var(--accent); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.demo-panel { display: none; }
+.demo-panel.active { display: block; }
+.demo-frame {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg); padding: 1.5rem; overflow: hidden;
+}
+
+/* ── COURSE ── */
+#course { background: var(--bg2); }
+.course-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.course-box {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.75rem;
+}
+.course-box.free { border-color: var(--green); border-width: 2px; }
+.course-box-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 500; margin-bottom: 1rem;
+}
+.badge-free { background: var(--green-light); color: var(--green); }
+.badge-paid { background: var(--accent-light); color: var(--accent); }
+.course-box-title { font-size: 16px; font-weight: 500; margin-bottom: 0.75rem; }
+.course-list { list-style: none; }
+.course-list li {
+  font-size: 13px; color: var(--ink-muted); padding: 5px 0;
+  padding-left: 16px; position: relative; line-height: 1.55;
+}
+.course-list li::before {
+  content: ''; position: absolute; left: 0; top: 12px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--border-strong);
+}
+.info-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+.info-table tr { border-bottom: 1px solid var(--border); }
+.info-table td { padding: 12px 0; font-size: 14px; vertical-align: top; }
+.info-table td:first-child { color: var(--ink-muted); width: 80px; font-size: 13px; }
+
+/* ── PROFILE ── */
+#profile { background: var(--bg); }
+.profile-card {
+  display: flex; gap: 2.5rem; align-items: flex-start;
+  background: var(--bg2); border-radius: var(--radius);
+  padding: 2.5rem; border: 1px solid var(--border);
+}
+.profile-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 28px; color: #fff;
+}
+.profile-name { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+.profile-role { font-size: 13px; color: var(--ink-muted); margin-bottom: 1rem; }
+.profile-bio { font-size: 14px; color: var(--ink-muted); line-height: 1.8; margin-bottom: 1.25rem; }
+.profile-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.profile-badge {
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 12px; background: var(--bg); border: 1px solid var(--border);
+  color: var(--ink-muted);
+}
+
+/* ── CTA ── */
+#cta {
+  background: var(--ink); color: #fff;
+  text-align: center; padding: 7rem 2rem;
+}
+#cta .section-label { color: rgba(255,255,255,0.4); }
+#cta .section-title { color: #fff; margin-bottom: 1rem; }
+#cta .section-sub { color: rgba(255,255,255,0.6); margin: 0 auto 2.5rem; }
+.cta-note { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 1rem; }
+.btn-white {
+  background: #fff; color: var(--ink);
+  padding: 14px 36px; border-radius: 40px;
+  font-size: 15px; font-weight: 500; text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  display: inline-block;
+}
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08);
+  text-align: center; padding: 2rem;
+  font-size: 12px; color: rgba(255,255,255,0.3);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  nav { padding: 0 1rem; }
+  section { padding: 4rem 1.25rem; }
+  .course-grid { grid-template-columns: 1fr; }
+  .profile-card { flex-direction: column; gap: 1.5rem; }
+  .demo-tabs { width: 100%; }
+  .demo-tab { flex: 1; text-align: center; }
+}
+
+/* ─────────── DEMO STYLES (embedded) ─────────── */
+.d-wrap { font-family: var(--sans); }
+.d-stage-bar { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:1.5rem; flex-wrap:wrap; }
+.d-dot { width:8px; height:8px; border-radius:50%; background:var(--bg3); transition:background 0.4s; }
+.d-dot.on { background:var(--accent); }
+.d-lbl { font-size:12px; color:var(--ink-muted); transition:color 0.4s; }
+.d-lbl.on { color:var(--accent); font-weight:500; }
+.d-sep { font-size:12px; color:var(--border-strong); }
+.d-scene { display:none; }
+.d-scene.vis { display:block; }
+.d-panel { background:var(--bg2); border-radius:var(--radius-sm); padding:1rem 1.25rem; border:1px solid var(--border); }
+.d-ptitle { font-size:11px; font-weight:500; color:var(--ink-muted); letter-spacing:0.06em; margin-bottom:10px; text-transform:uppercase; }
+.d-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+@media(max-width:540px){ .d-row { grid-template-columns:1fr; } }
+.wb { background:#f8f7f2; border:1px solid var(--bg3); border-radius:var(--radius-sm); padding:10px; font-family:monospace; min-height:140px; }
+.wb-line { font-size:13px; color:var(--ink); line-height:1.8; opacity:0; transform:translateX(-4px); transition:opacity 0.4s,transform 0.4s; }
+.wb-line.s { opacity:1; transform:none; }
+.wb-sc { font-size:12px; color:var(--ink-faint); font-style:italic; }
+.up-area { border:1.5px dashed var(--border-strong); border-radius:var(--radius-sm); display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:140px; gap:8px; }
+.up-icon { width:32px; height:32px; }
+.up-txt { font-size:13px; color:var(--ink-muted); }
+.up-prog { width:80%; height:4px; background:var(--bg3); border-radius:2px; overflow:hidden; margin-top:6px; display:none; }
+.up-bar { height:100%; width:0%; background:var(--accent); border-radius:2px; transition:width 0.8s ease; }
+.d-chat { display:flex; flex-direction:column; gap:9px; }
+.d-msg { max-width:88%; padding:8px 12px; border-radius:10px; font-size:13px; line-height:1.6; opacity:0; transform:translateY(5px); transition:opacity 0.4s,transform 0.4s; }
+.d-msg.s { opacity:1; transform:none; }
+.d-msg.u { align-self:flex-end; background:var(--accent-light); color:#1e3f80; border-radius:10px 10px 2px 10px; }
+.d-msg.a { align-self:flex-start; background:#fff; border:1px solid var(--border); color:var(--ink); border-radius:10px 10px 10px 2px; }
+.d-typing { align-self:flex-start; background:#fff; border:1px solid var(--border); border-radius:10px 10px 10px 2px; padding:9px 12px; opacity:0; transition:opacity 0.3s; }
+.d-typing.s { opacity:1; }
+.d-dots { display:flex; gap:4px; }
+.d-dot2 { width:6px; height:6px; border-radius:50%; background:#bbb; animation:dblink 1.2s infinite; }
+.d-dot2:nth-child(2){animation-delay:0.2s;}.d-dot2:nth-child(3){animation-delay:0.4s;}
+@keyframes dblink{0%,80%,100%{opacity:0.3}40%{opacity:1}}
+.exc-table { width:100%; border-collapse:collapse; font-size:13px; }
+.exc-table th { background:var(--green-light); color:var(--green); font-weight:500; padding:5px 10px; border:1px solid rgba(26,122,74,0.15); text-align:left; }
+.exc-table td { padding:5px 10px; border:1px solid var(--border); color:var(--ink); }
+.exc-table tr:nth-child(even) td { background:var(--bg2); }
+.exc-row { opacity:0; transform:translateY(4px); transition:opacity 0.35s,transform 0.35s; }
+.exc-row.s { opacity:1; transform:none; }
+.think-box { background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm); padding:1rem; margin-bottom:12px; }
+.think-ttl { font-size:11px; font-weight:500; color:#534AB7; letter-spacing:0.06em; margin-bottom:10px; }
+.think-item { display:flex; align-items:flex-start; gap:8px; margin-bottom:7px; opacity:0; transform:translateX(-4px); transition:opacity 0.4s,transform 0.4s; }
+.think-item.s { opacity:1; transform:none; }
+.t-bul { width:6px; height:6px; border-radius:50%; background:#AFA9EC; margin-top:6px; flex-shrink:0; }
+.t-txt { font-size:13px; color:var(--ink-muted); line-height:1.55; }
+.slide-stack { display:flex; flex-direction:column; gap:10px; }
+.slide { background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm); overflow:hidden; opacity:0; transform:translateY(8px); transition:opacity 0.45s,transform 0.45s; }
+.slide.s { opacity:1; transform:none; }
+.slide-hdr { padding:7px 12px; font-size:11px; font-weight:500; letter-spacing:0.05em; }
+.sh-p { background:#EEEDFE; color:#3C3489; }
+.sh-t { background:var(--green-light); color:var(--green); }
+.sh-c { background:#FAECE7; color:#712B13; }
+.sh-b { background:var(--accent-light); color:var(--accent); }
+.slide-body { padding:9px 12px; }
+.slide-ttl { font-size:14px; font-weight:500; color:var(--ink); margin-bottom:5px; }
+.slide-pts { list-style:none; }
+.slide-pts li { font-size:12px; color:var(--ink-muted); padding:2px 0 2px 12px; position:relative; }
+.slide-pts li::before { content:''; position:absolute; left:0; top:9px; width:4px; height:4px; border-radius:50%; background:var(--border-strong); }
+.d-result { text-align:center; padding:1.5rem 0; }
+.t-row { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px; margin-bottom:1.25rem; }
+.t-badge { display:inline-flex; align-items:center; padding:5px 14px; border-radius:20px; font-size:12px; font-weight:500; }
+.t-bef { background:#FCEBEB; color:#A32D2D; }
+.t-aft { background:var(--green-light); color:var(--green); }
+.t-arr { font-size:14px; color:var(--ink-muted); }
+.d-note { font-size:13px; color:var(--ink-muted); line-height:1.8; }
+.d-tag2 { display:inline-block; margin-top:1rem; padding:5px 14px; background:var(--accent-light); color:var(--accent); border-radius:20px; font-size:12px; font-weight:500; }
+.step-note { font-size:12px; color:var(--ink-muted); text-align:center; margin-top:0.75rem; min-height:18px; }
+.d-btns { display:flex; gap:8px; justify-content:center; margin-top:1.5rem; }
+.d-btn { padding:8px 20px; font-size:13px; border-radius:8px; border:1px solid var(--border-strong); background:#fff; color:var(--ink); cursor:pointer; transition:background 0.15s; }
+.d-btn:disabled { opacity:0.35; cursor:default; }
+.d-btn.pri { background:var(--accent); color:#fff; border-color:var(--accent); }
+.d-btn.rep { background:var(--green-light); color:var(--green); border-color:rgba(26,122,74,0.25); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>Claude</span>講座</a>
+  <a class="nav-cta" href="#cta">無料で申し込む</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-badge">参加無料 · 完全個別 1on1</div>
+  <h1 class="hero-title">
+    AIで仕事の<br><em>「めんどくさい」</em><br>をなくそう
+  </h1>
+  <p class="hero-sub">
+    難しい話はゼロ。あなたの「困った」を持ち寄るだけで、<br>
+    その場でAIが解決する様子をデモします。
+  </p>
+  <div class="hero-btns">
+    <a class="btn-primary" href="#cta">無料で申し込む</a>
+    <a class="btn-secondary" href="#demo">デモを見る</a>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PAIN -->
+<section id="pain">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">こんなお悩み、ありませんか？</p>
+      <h2 class="section-title">「うちみたいな会社に<br>AIは関係ない」は、<em style="font-style:italic">違います。</em></h2>
+      <p class="section-sub">小さな会社ほど、一人ひとりの作業が重い。だからこそAIが効きます。</p>
+    </div>
+    <div class="pain-grid reveal">
+      <div class="pain-item"><div class="pain-check"></div><div class="pain-text">見積書・請求書を毎回 Excel で手作業。時間がかかってしょうがない</div></div>
+      <div class="pain-item"><div class="pain-check"></div><div class="pain-text">AIが話題だけど、うちみたいな会社で何に使えるのかわからない</div></div>
+      <div class="pain-item"><div class="pain-check"></div><div class="pain-text">ホームページやSNS、やった方がいいのはわかるけど手が回らない</div></div>
+      <div class="pain-item"><div class="pain-check"></div><div class="pain-text">紙の書類・FAXが山積み。デジタル化したいけど何から始めれば…</div></div>
+      <div class="pain-item"><div class="pain-check"></div><div class="pain-text">IT業者に頼むと高い。でも社内にわかる人がいない</div></div>
+      <div class="pain-item"><div class="pain-check"></div><div class="pain-text">「何を相談したらいいかわからない」状態のまま何もできていない</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WHAT -->
+<section id="what">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Claudeってなに？</p>
+      <h2 class="section-title">ChatGPTと並ぶ、<br>世界トップクラスのAI</h2>
+      <p class="section-sub">Anthropicが開発した会話型AI。文章・表・画像の読み取りから資料作成まで、幅広い業務に対応します。</p>
+    </div>
+    <div class="what-cards">
+      <div class="what-card reveal">
+        <div class="what-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="16" height="12" rx="2" stroke="#2a52a0" stroke-width="1.5"/>
+            <path d="M6 17h8M10 14v3" stroke="#2a52a0" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="what-card-title">画像・写真を読み取る</div>
+        <div class="what-card-body">ホワイトボードの写真、手書きのメモ、レシートなどをそのまま送るだけでテキスト化・表化できます。</div>
+      </div>
+      <div class="what-card reveal">
+        <div class="what-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5h14M3 10h10M3 15h6" stroke="#2a52a0" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="what-card-title">文章を書く・直す</div>
+        <div class="what-card-body">メール、提案書、SNS投稿、求人票など。指示するだけで下書きが完成します。</div>
+      </div>
+      <div class="what-card reveal">
+        <div class="what-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="7" stroke="#2a52a0" stroke-width="1.5"/>
+            <path d="M10 6v4l3 2" stroke="#2a52a0" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="what-card-title">考えを整理する</div>
+        <div class="what-card-body">頭の中のもやっとしたアイデアを話しかけるだけで、構造化・資料化してくれます。</div>
+      </div>
+      <div class="what-card reveal">
+        <div class="what-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 14l4-4 3 3 5-6" stroke="#2a52a0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="what-card-title">データを変換・集計</div>
+        <div class="what-card-body">Excelの手作業を自動化。売上集計、比較表作成なども会話で指示できます。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">実際の業務変化を見てください</p>
+      <h2 class="section-title">デモで体験する<br>「before → after」</h2>
+      <p class="section-sub">講座当日はこのようなデモを実演します。あなたの業務に置き換えてイメージしてみてください。</p>
+    </div>
+    <div class="reveal">
+      <div class="demo-tabs">
+        <button class="demo-tab active" onclick="switchDemo('excel',this)">ホワイトボード → Excel化</button>
+        <button class="demo-tab" onclick="switchDemo('doc',this)">壁打ち → 資料化</button>
+      </div>
+
+      <!-- DEMO 1: Whiteboard to Excel -->
+      <div class="demo-frame demo-panel active" id="dp-excel">
+        <div class="d-wrap" id="dw1">
+          <div class="d-stage-bar">
+            <span class="d-dot" id="A0"></span><span class="d-lbl" id="B0">写真を撮る</span>
+            <span class="d-sep">›</span>
+            <span class="d-dot" id="A1"></span><span class="d-lbl" id="B1">Claudeに送る</span>
+            <span class="d-sep">›</span>
+            <span class="d-dot" id="A2"></span><span class="d-lbl" id="B2">Excelに変換</span>
+            <span class="d-sep">›</span>
+            <span class="d-dot" id="A3"></span><span class="d-lbl" id="B3">完成</span>
+          </div>
+          <div class="d-scene" id="ds0">
+            <div class="d-row">
+              <div class="d-panel">
+                <div class="d-ptitle">ホワイトボード（手書き）</div>
+                <div class="wb">
+                  <div class="wb-line" id="e0">月次売上まとめ</div>
+                  <div class="wb-line" id="e1">─────────────</div>
+                  <div class="wb-line" id="e2">4月　山田　380,000</div>
+                  <div class="wb-line" id="e3">4月　鈴木　210,000</div>
+                  <div class="wb-line" id="e4">4月　田中　450,000</div>
+                  <div class="wb-line" id="e5">─────────────</div>
+                  <div class="wb-line wb-sc" id="e6">合計 → あとで計算</div>
+                </div>
+              </div>
+              <div class="d-panel">
+                <div class="d-ptitle">スマホで撮影してアップロード</div>
+                <div class="up-area">
+                  <svg class="up-icon" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="#e8eef9"/>
+                    <path d="M16 20V12M16 12L13 15M16 12L19 15" stroke="#2a52a0" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M10 22h12" stroke="#2a52a0" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  <span class="up-txt" id="utxt">写真を選択...</span>
+                  <div class="up-prog" id="uprog"><div class="up-bar" id="ubar"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="step-note">会議後、ホワイトボードをスマホで撮影するだけ</div>
+          </div>
+          <div class="d-scene" id="ds1">
+            <div class="d-panel">
+              <div class="d-ptitle">Claudeとのやりとり</div>
+              <div class="d-chat" id="dc1">
+                <div class="d-msg u" id="ec0">このホワイトボードの写真をExcelの表にしてください</div>
+                <div class="d-typing" id="ety"><div class="d-dots"><div class="d-dot2"></div><div class="d-dot2"></div><div class="d-dot2"></div></div></div>
+                <div class="d-msg a" id="ec1" style="display:none">画像を読み取りました。月次売上データを検出しました。Excelの表形式に変換します。</div>
+                <div class="d-msg u" id="ec2" style="display:none">合計も自動計算してください</div>
+                <div class="d-msg a" id="ec3" style="display:none">SUM関数を追加して合計行も作成します。</div>
+              </div>
+            </div>
+            <div class="step-note">指示を入力するだけ。追加の要望もそのまま伝えられる</div>
+          </div>
+          <div class="d-scene" id="ds2">
+            <div class="d-panel">
+              <div class="d-ptitle">変換されたExcelデータ</div>
+              <table class="exc-table"><thead><tr><th>月</th><th>担当者</th><th>売上金額</th></tr></thead><tbody id="etbody"></tbody></table>
+            </div>
+            <div class="step-note">そのままコピーしてExcelに貼り付けるだけで完成</div>
+          </div>
+          <div class="d-scene" id="ds3">
+            <div class="d-result">
+              <div style="font-size:15px;font-weight:500;margin-bottom:1rem">作業時間の変化</div>
+              <div class="t-row">
+                <span class="t-badge t-bef" id="tb1" style="opacity:0;transition:opacity 0.5s">手入力：約30分</span>
+                <span class="t-arr">→</span>
+                <span class="t-badge t-aft" id="tb2" style="opacity:0;transition:opacity 0.5s 0.5s">Claudeで：約2分</span>
+              </div>
+              <div class="d-note" id="dn1" style="opacity:0;transition:opacity 0.5s 1s">写真を撮って送るだけ。<br>入力ミスもゼロ、合計計算も自動。</div>
+            </div>
+          </div>
+          <div class="d-btns">
+            <button class="d-btn" id="ep" disabled onclick="eChange(-1)">← 戻る</button>
+            <button class="d-btn pri" id="en" onclick="eChange(1)">次へ →</button>
+            <button class="d-btn rep" id="er" style="display:none" onclick="eReplay()">もう一度</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEMO 2: Brainstorm to Doc -->
+      <div class="demo-frame demo-panel" id="dp-doc">
+        <div class="d-wrap" id="dw2">
+          <div class="d-stage-bar">
+            <span class="d-dot" id="P0"></span><span class="d-lbl" id="Q0">頭の中を話す</span>
+            <span class="d-sep">›</span>
+            <span class="d-dot" id="P1"></span><span class="d-lbl" id="Q1">Claudeが整理</span>
+            <span class="d-sep">›</span>
+            <span class="d-dot" id="P2"></span><span class="d-lbl" id="Q2">資料に変換</span>
+            <span class="d-sep">›</span>
+            <span class="d-dot" id="P3"></span><span class="d-lbl" id="Q3">完成</span>
+          </div>
+          <div class="d-scene" id="fs0">
+            <div class="d-panel">
+              <div class="d-ptitle">Claudeへの壁打ち</div>
+              <div class="d-chat" id="fc0">
+                <div class="d-msg u" id="fc00">新しいサービスを始めたいんだけど、まだ何も整理できてなくて。話を聞いてもらえますか？</div>
+                <div class="d-msg a" id="fc01">もちろんです。まずどんなことをやりたいか、思いつくままに話してください。</div>
+                <div class="d-msg u" id="fc02">地元の小さな飲食店って、SNSとかホームページを全然やれてないじゃないですか。忙しくて。そこを手伝いたいなと。</div>
+                <div class="d-msg a" id="fc03">なるほど。「忙しくてできない」のを代わりにやる、ということですね。具体的にどんな形でサポートしますか？</div>
+                <div class="d-msg u" id="fc04">写真撮って、投稿文も書いて、月1〜2万くらいで。AIを使えば一人でも複数店舗みれるかなって。</div>
+                <div class="d-typing" id="fty"><div class="d-dots"><div class="d-dot2"></div><div class="d-dot2"></div><div class="d-dot2"></div></div></div>
+                <div class="d-msg a" id="fc05" style="display:none">整理しますね。「AIを活用した飲食店向けSNS代行サービス」で、月1〜2万円・複数店舗対応がポイントですね。この方向で資料を作りましょうか？</div>
+              </div>
+            </div>
+            <div class="step-note">「まだまとまってない」でも大丈夫。話しながら整理できます</div>
+          </div>
+          <div class="d-scene" id="fs1">
+            <div class="think-box">
+              <div class="think-ttl">Claude が会話から抽出中...</div>
+              <div class="think-item" id="ti0"><div class="t-bul"></div><div class="t-txt">ターゲット：地元の中小飲食店（SNS未対応）</div></div>
+              <div class="think-item" id="ti1"><div class="t-bul"></div><div class="t-txt">提供価値：忙しいオーナーに代わりSNS・HP運用を代行</div></div>
+              <div class="think-item" id="ti2"><div class="t-bul"></div><div class="t-txt">料金モデル：月額1〜2万円の定額制</div></div>
+              <div class="think-item" id="ti3"><div class="t-bul"></div><div class="t-txt">競争優位：AIを活用し1人で複数店舗を効率対応</div></div>
+              <div class="think-item" id="ti4"><div class="t-bul"></div><div class="t-txt">課題：認知獲得・初期顧客の獲得方法</div></div>
+            </div>
+            <div class="d-panel">
+              <div class="d-ptitle">Claudeからの確認</div>
+              <div class="d-chat">
+                <div class="d-msg a s">5つのポイントを整理しました。この内容でスライド資料を作成します。不足している点はありますか？</div>
+              </div>
+            </div>
+            <div class="step-note">キーワードを自動抽出・構造化。抜け漏れも指摘してくれる</div>
+          </div>
+          <div class="d-scene" id="fs2">
+            <div class="d-panel">
+              <div class="d-ptitle">生成された資料（スライド構成）</div>
+              <div class="slide-stack">
+                <div class="slide" id="sl0"><div class="slide-hdr sh-p">スライド 1 — タイトル</div><div class="slide-body"><div class="slide-ttl">AI×SNS代行で、飲食店の集客を変える</div><ul class="slide-pts"><li>〇〇（あなたの名前）/ 2024年〇月</li></ul></div></div>
+                <div class="slide" id="sl1"><div class="slide-hdr sh-t">スライド 2 — 課題</div><div class="slide-body"><div class="slide-ttl">地元飲食店が抱える「情報発信の壁」</div><ul class="slide-pts"><li>SNS・HPを更新できていない店舗が多数</li><li>忙しくてコンテンツ制作に時間を割けない</li><li>IT業者へ外注すると費用が高い</li></ul></div></div>
+                <div class="slide" id="sl2"><div class="slide-hdr sh-c">スライド 3 — サービス概要</div><div class="slide-body"><div class="slide-ttl">月額1〜2万円で「まるごと代行」</div><ul class="slide-pts"><li>写真撮影 + 投稿文作成 + SNS投稿を代行</li><li>AIを活用し低コストで複数店舗に対応</li><li>契約縛りなし・小規模からスタート可能</li></ul></div></div>
+                <div class="slide" id="sl3"><div class="slide-hdr sh-b">スライド 4 — 今後の展開</div><div class="slide-body"><div class="slide-ttl">まず3店舗でモデルケースを作る</div><ul class="slide-pts"><li>初月：知人・紹介で試験導入</li><li>2〜3ヶ月：実績をもとに営業展開</li><li>半年後：10店舗・月20万円を目標に</li></ul></div></div>
+              </div>
+            </div>
+            <div class="step-note">会話だけで4枚のスライド構成が完成</div>
+          </div>
+          <div class="d-scene" id="fs3">
+            <div class="d-result">
+              <div style="font-size:15px;font-weight:500;margin-bottom:1rem">作業時間の変化</div>
+              <div class="t-row">
+                <span class="t-badge t-bef" id="fb1" style="opacity:0;transition:opacity 0.5s">一人でまとめる：数時間〜1日</span>
+                <span class="t-arr">→</span>
+                <span class="t-badge t-aft" id="fb2" style="opacity:0;transition:opacity 0.5s 0.5s">壁打ち+自動生成：約15分</span>
+              </div>
+              <div class="d-note" id="fn1" style="opacity:0;transition:opacity 0.5s 1s">「何から手をつければいいかわからない」状態から<br>そのまま使える資料が15分で完成。</div>
+              <div class="d-tag2" id="fn2" style="opacity:0;transition:opacity 0.5s 1.5s">思考の整理 + 資料化 を同時に</div>
+            </div>
+          </div>
+          <div class="d-btns">
+            <button class="d-btn" id="fp" disabled onclick="fChange(-1)">← 戻る</button>
+            <button class="d-btn pri" id="fn" onclick="fChange(1)">次へ →</button>
+            <button class="d-btn rep" id="frep" style="display:none" onclick="fReplay()">もう一度</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.reveal -->
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- COURSE -->
+<section id="course">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">この講座でできること</p>
+      <h2 class="section-title">ご相談から実装まで<br>一緒に進めます</h2>
+    </div>
+    <div class="course-grid reveal">
+      <div class="course-box free">
+        <span class="course-box-badge badge-free">無料</span>
+        <div class="course-box-title">ご相談 + AIデモ</div>
+        <ul class="course-list">
+          <li>あなたの会社の困りごとをヒアリング</li>
+          <li>ChatGPT・Claude で実際の業務デモを実演</li>
+          <li>すぐ着手できる「次にやること」をお渡し</li>
+          <li>外注なら何万円、自分でやるなら無料など費用感もお伝え</li>
+        </ul>
+      </div>
+      <div class="course-box">
+        <span class="course-box-badge badge-paid">有償・要相談</span>
+        <div class="course-box-title">個別の課題解決・実装伴走</div>
+        <ul class="course-list">
+          <li>アカウント発行・ツール設定</li>
+          <li>業務への組み込みサポート</li>
+          <li>社内向けマニュアル作成</li>
+          <li>継続的な運用サポート</li>
+        </ul>
+      </div>
+    </div>
+    <table class="info-table reveal">
+      <tr><td>参加費</td><td><strong>無料</strong></td></tr>
+      <tr><td>形式</td><td>完全個別開催（1on1）　1回 60〜90分目安</td></tr>
+      <tr><td>日時</td><td>ご都合に合わせて個別調整（平日 / 週末・夜間も可）</td></tr>
+      <tr><td>場所</td><td>松戸市内（ご希望の場所へ伺います）</td></tr>
+      <tr><td>対象</td><td>松戸市近郊の中小企業経営者・個人事業主</td></tr>
+    </table>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROFILE -->
+<section id="profile">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">相談員について</p>
+      <h2 class="section-title">一緒に考える人が<br>いると、早い。</h2>
+    </div>
+    <div class="profile-card reveal">
+      <div class="profile-avatar">W</div>
+      <div>
+        <div class="profile-name">渡邊 英知（わたなべ ひでとも）</div>
+        <div class="profile-role">合同会社WhatHides 代表</div>
+        <div class="profile-bio">
+          AIに10年以上かかわってきましたが、いちばん大事なのは「まずやってみる」だと思っています。<br><br>
+          横浜銀行へのAIシステム導入や国交省のDX事業など、大きな組織での経験もありますが、今は「日本の中堅中小企業の困りごとを一緒に解決する」ことに一番やりがいを感じています。まず話を聞かせてください。
+        </div>
+        <div class="profile-badges">
+          <span class="profile-badge">AI歴10年超</span>
+          <span class="profile-badge">横浜銀行AIシステム導入</span>
+          <span class="profile-badge">国交省DX実証事業</span>
+          <span class="profile-badge">スタートアップCOO経験</span>
+          <span class="profile-badge">京都大学大学院修了</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <p class="section-label">まずは気軽にどうぞ</p>
+    <h2 class="section-title">「何を相談したらいいか<br>わからない」でもOKです</h2>
+    <p class="section-sub">お申し込みフォームまたはメールでご連絡ください。日程はご都合に合わせて調整します。</p>
+    <a class="btn-white" href="mailto:hidetomo.watanabe@whathides.co.jp">無料で申し込む</a>
+    <div class="cta-note">hidetomo.watanabe@whathides.co.jp</div>
+  </div>
+</section>
+
+<footer>
+  <p>主催：渡邊英知（合同会社WhatHides）　&copy; 2024 WhatHides LLC</p>
+</footer>
+
+<script>
+/* ─── Scroll reveal ─── */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ─── Demo tab switch ─── */
+function switchDemo(id, btn){
+  document.querySelectorAll('.demo-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.demo-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('dp-'+id).classList.add('active');
+  if(id==='excel'){ eScene=0; eShow(0); }
+  if(id==='doc'){ fScene=0; fShow(0); }
+}
+
+/* ─── DEMO 1: Excel ─── */
+let eScene=0, eTimers=[];
+function eCT(fn,ms){ eTimers.push(setTimeout(fn,ms)); }
+function eClear(){ eTimers.forEach(clearTimeout); eTimers=[]; }
+function eUpdateStage(s){
+  for(let i=0;i<4;i++){
+    document.getElementById('A'+i).className='d-dot'+(i<=s?' on':'');
+    document.getElementById('B'+i).className='d-lbl'+(i===s?' on':'');
+  }
+}
+function eShow(s){
+  eClear();
+  document.querySelectorAll('#dw1 .d-scene').forEach(el=>el.classList.remove('vis'));
+  document.getElementById('ds'+s).classList.add('vis');
+  eUpdateStage(s);
+  document.getElementById('ep').disabled=s===0;
+  document.getElementById('en').style.display=s===3?'none':'inline-block';
+  document.getElementById('er').style.display=s===3?'inline-block':'none';
+  if(s===0){
+    ['e0','e1','e2','e3','e4','e5','e6'].forEach((id,i)=>{
+      const el=document.getElementById(id); el.classList.remove('s');
+      eCT(()=>el.classList.add('s'),200+i*180);
+    });
+    eCT(()=>{
+      const p=document.getElementById('uprog'),b=document.getElementById('ubar'),t=document.getElementById('utxt');
+      p.style.display='block'; b.style.width='0%'; t.textContent='アップロード中...';
+      eCT(()=>{b.style.width='100%'},100);
+      eCT(()=>{t.textContent='アップロード完了'},1000);
+    },1500);
+  }
+  if(s===1){
+    ['ec0','ec1','ec2','ec3'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('s');el.style.display='';});
+    const ty=document.getElementById('ety');ty.classList.remove('s');
+    eCT(()=>document.getElementById('ec0').classList.add('s'),200);
+    eCT(()=>ty.classList.add('s'),700);
+    eCT(()=>{ty.style.display='none';const c=document.getElementById('ec1');c.style.display='flex';eCT(()=>c.classList.add('s'),50);},2000);
+    eCT(()=>{const c=document.getElementById('ec2');c.style.display='flex';eCT(()=>c.classList.add('s'),50);},3000);
+    eCT(()=>{const c=document.getElementById('ec3');c.style.display='flex';eCT(()=>c.classList.add('s'),50);},4000);
+  }
+  if(s===2){
+    const rows=[['4月','山田 健一','¥380,000'],['4月','鈴木 花子','¥210,000'],['4月','田中 一郎','¥450,000'],['','合計','¥1,040,000']];
+    const tb=document.getElementById('etbody'); tb.innerHTML='';
+    rows.forEach((r,i)=>{
+      const tr=document.createElement('tr');tr.className='exc-row';
+      r.forEach((c,ci)=>{const td=document.createElement('td');td.textContent=c;if(i===3)td.style.fontWeight='500';if(i===3&&ci===2){td.style.color='#1a7a4a';td.style.background='#e6f4ec';}tr.appendChild(td);});
+      tb.appendChild(tr);
+      eCT(()=>tr.classList.add('s'),300+i*320);
+    });
+  }
+  if(s===3){
+    eCT(()=>{document.getElementById('tb1').style.opacity='1';},200);
+    eCT(()=>{document.getElementById('tb2').style.opacity='1';},700);
+    eCT(()=>{document.getElementById('dn1').style.opacity='1';},1200);
+  }
+}
+function eChange(d){ eScene=Math.max(0,Math.min(3,eScene+d)); eShow(eScene); }
+function eReplay(){ eScene=0; eShow(0); }
+
+/* ─── DEMO 2: Doc ─── */
+let fScene=0, fTimers=[];
+function fCT(fn,ms){ fTimers.push(setTimeout(fn,ms)); }
+function fClear(){ fTimers.forEach(clearTimeout); fTimers=[]; }
+function fUpdateStage(s){
+  for(let i=0;i<4;i++){
+    document.getElementById('P'+i).className='d-dot'+(i<=s?' on':'');
+    document.getElementById('Q'+i).className='d-lbl'+(i===s?' on':'');
+  }
+}
+function fShow(s){
+  fClear();
+  document.querySelectorAll('#dw2 .d-scene').forEach(el=>el.classList.remove('vis'));
+  document.getElementById('fs'+s).classList.add('vis');
+  fUpdateStage(s);
+  document.getElementById('fp').disabled=s===0;
+  document.getElementById('fn').style.display=s===3?'none':'inline-block';
+  document.getElementById('frep').style.display=s===3?'inline-block':'none';
+  if(s===0){
+    ['fc00','fc01','fc02','fc03','fc04','fc05'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('s');el.style.display='';});
+    const ty=document.getElementById('fty');ty.classList.remove('s');
+    const delays=[200,900,1800,2600,3500];
+    ['fc00','fc01','fc02','fc03','fc04'].forEach((id,i)=>fCT(()=>document.getElementById(id).classList.add('s'),delays[i]));
+    fCT(()=>ty.classList.add('s'),4400);
+    fCT(()=>{ty.style.display='none';const c=document.getElementById('fc05');c.style.display='flex';fCT(()=>c.classList.add('s'),50);},5200);
+  }
+  if(s===1){
+    ['ti0','ti1','ti2','ti3','ti4'].forEach((id,i)=>{
+      const el=document.getElementById(id);el.classList.remove('s');
+      fCT(()=>el.classList.add('s'),300+i*380);
+    });
+  }
+  if(s===2){
+    ['sl0','sl1','sl2','sl3'].forEach((id,i)=>{
+      const el=document.getElementById(id);el.classList.remove('s');
+      fCT(()=>el.classList.add('s'),200+i*420);
+    });
+  }
+  if(s===3){
+    fCT(()=>{document.getElementById('fb1').style.opacity='1';},200);
+    fCT(()=>{document.getElementById('fb2').style.opacity='1';},700);
+    fCT(()=>{document.getElementById('fn1').style.opacity='1';},1200);
+    fCT(()=>{document.getElementById('fn2').style.opacity='1';},1700);
+  }
+}
+function fChange(d){ fScene=Math.max(0,Math.min(3,fScene+d)); fShow(fScene); }
+function fReplay(){ fScene=0; fShow(0); }
+
+/* init */
+eShow(0);
+</script>
+</body>
+</html>
