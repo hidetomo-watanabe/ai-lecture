@@ -155,6 +155,22 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
 /* ── PAIN ── */
 #pain { background: var(--bg); }
+.store-callout {
+  margin-top: 2rem;
+  background: var(--accent-light);
+  border: 1px solid rgba(42,82,160,0.2);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.25rem; flex-wrap: wrap;
+}
+.store-callout__text {
+  font-size: 14px; color: var(--ink); line-height: 1.65; flex: 1;
+}
+.store-callout__text strong {
+  display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 4px;
+}
 .pain-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1px; background: var(--border); border: 1px solid var(--border);
@@ -436,10 +452,16 @@ footer {
     <div class="pain-grid reveal">
       <div class="pain-item"><div class="pain-check"></div><div class="pain-text">見積書・請求書を毎回 Excel で手作業。時間がかかってしょうがない</div></div>
       <div class="pain-item"><div class="pain-check"></div><div class="pain-text">AIが話題だけど、うちみたいな会社で何に使えるのかわからない</div></div>
-      <div class="pain-item"><div class="pain-check"></div><div class="pain-text">ホームページやSNS、やった方がいいのはわかるけど手が回らない</div></div>
       <div class="pain-item"><div class="pain-check"></div><div class="pain-text">紙の書類・FAXが山積み。デジタル化したいけど何から始めれば…</div></div>
       <div class="pain-item"><div class="pain-check"></div><div class="pain-text">IT業者に頼むと高い。でも社内にわかる人がいない</div></div>
       <div class="pain-item"><div class="pain-check"></div><div class="pain-text">「何を相談したらいいかわからない」状態のまま何もできていない</div></div>
+    </div>
+    <div class="store-callout reveal">
+      <p class="store-callout__text">
+        <strong>飲食・小売・サロンのオーナー向け</strong>
+        SNS投稿・見積・メール返信など、店舗ビジネスに特化した専用ページも用意しています。
+      </p>
+      <a class="btn-secondary" href="store/" style="white-space:nowrap">店舗向けページを見る →</a>
     </div>
   </div>
 </section>
