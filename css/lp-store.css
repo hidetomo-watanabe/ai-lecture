@@ -252,7 +252,7 @@
 /* ---------- 実績数値 ---------- */
 .trust-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   background: var(--c-line);
   border: 1px solid var(--c-line);
@@ -350,6 +350,13 @@
   font-size: 12px;
   color: var(--c-ink-faint);
   margin-top: 10px;
+}
+
+/* ---------- CTA セクション内ボタン ---------- */
+.cta-section .btn-fill {
+  display: inline-block;
+  padding: 14px 36px;
+  font-size: 15px;
 }
 
 /* ---------- レスポンシブ ---------- */

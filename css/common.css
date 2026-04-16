@@ -87,3 +87,9 @@ ul { list-style: none; }
   font-size: 12px;
   color: var(--c-ink-faint);
 }
+.site-footer p + p { margin-top: 6px; }
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

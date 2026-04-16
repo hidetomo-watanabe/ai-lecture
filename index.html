@@ -329,6 +329,7 @@ footer {
 @media(max-width:640px){
   nav { padding: 0 1rem; }
   section { padding: 4rem 1.25rem; }
+  .what-cards { grid-template-columns: 1fr; }
   .course-grid { grid-template-columns: 1fr; }
   .profile-card { flex-direction: column; gap: 1.5rem; }
   .demo-tabs { width: 100%; }
@@ -346,7 +347,7 @@ footer {
 .d-scene { display:none; }
 .d-scene.vis { display:block; }
 .d-panel { background:var(--bg2); border-radius:var(--radius-sm); padding:1rem 1.25rem; border:1px solid var(--border); }
-.d-ptitle { font-size:11px; font-weight:500; color:var(--ink-muted); letter-spacing:0.06em; margin-bottom:10px; text-transform:uppercase; }
+.d-ptitle { font-size:11px; font-weight:500; color:var(--ink-muted); letter-spacing:0.06em; margin-bottom:10px; }
 .d-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
 @media(max-width:540px){ .d-row { grid-template-columns:1fr; } }
 .wb { background:#f8f7f2; border:1px solid var(--bg3); border-radius:var(--radius-sm); padding:10px; font-family:monospace; min-height:140px; }
@@ -645,7 +646,7 @@ footer {
           </div>
           <div class="d-scene" id="fs1">
             <div class="think-box">
-              <div class="think-ttl">Claude が会話から抽出中...</div>
+              <div class="think-ttl">Claudeが会話から抽出中...</div>
               <div class="think-item" id="ti0"><div class="t-bul"></div><div class="t-txt">ターゲット：地元の中小飲食店（SNS未対応）</div></div>
               <div class="think-item" id="ti1"><div class="t-bul"></div><div class="t-txt">提供価値：忙しいオーナーに代わりSNS・HP運用を代行</div></div>
               <div class="think-item" id="ti2"><div class="t-bul"></div><div class="t-txt">料金モデル：月額1〜2万円の定額制</div></div>
@@ -678,7 +679,7 @@ footer {
               <div class="t-row">
                 <span class="t-badge t-bef" id="fb1" style="opacity:0;transition:opacity 0.5s">一人でまとめる：数時間〜1日</span>
                 <span class="t-arr">→</span>
-                <span class="t-badge t-aft" id="fb2" style="opacity:0;transition:opacity 0.5s 0.5s">壁打ち+自動生成：約15分</span>
+                <span class="t-badge t-aft" id="fb2" style="opacity:0;transition:opacity 0.5s 0.5s">壁打ち+Claudeで：約15分</span>
               </div>
               <div class="d-note" id="fn1" style="opacity:0;transition:opacity 0.5s 1s">「何から手をつければいいかわからない」状態から<br>そのまま使える資料が15分で完成。</div>
               <div class="d-tag2" id="fn2" style="opacity:0;transition:opacity 0.5s 1.5s">思考の整理 + 資料化 を同時に</div>
@@ -779,7 +780,7 @@ footer {
 </section>
 
 <footer>
-  <p>主催：渡邊英知（合同会社WhatHides）　&copy; 2024 WhatHides LLC</p>
+  <p>主催：渡邊英知（合同会社WhatHides）　&copy; 2026 WhatHides LLC</p>
 </footer>
 
 <script>
