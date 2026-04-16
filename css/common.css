@@ -62,11 +62,24 @@ ul { list-style: none; }
   max-width: 100%;
 }
 .site-nav__logo {
-  font-size: 13px;
+  font-family: var(--f-serif);
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 .site-nav__logo a { color: var(--c-ink); }
+.site-nav__badge {
+  font-family: var(--f-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: var(--c-accent-bg);
+  color: var(--c-accent);
+  vertical-align: middle;
+  margin-left: 6px;
+}
 .site-nav__cta {
   font-size: 12px;
   font-weight: 500;
