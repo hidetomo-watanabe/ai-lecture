@@ -404,3 +404,10 @@ footer {
 .d-btn:disabled { opacity:0.35; cursor:default; }
 .d-btn.pri { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
 .d-btn.rep { background:var(--c-green-bg); color:var(--c-green); border-color:rgba(26,122,74,0.25); }
+
+/* FAQ */
+.faq-list { display:flex; flex-direction:column; gap:0; max-width:680px; margin:2rem auto 0; }
+.faq-item { padding:1rem 0; border-bottom:1px solid var(--c-line-lt); }
+.faq-item:last-child { border-bottom:none; }
+.faq-item__q { font-size:14px; font-weight:700; margin-bottom:6px; }
+.faq-item__a { font-size:13px; color:var(--c-ink-muted); line-height:1.7; }
