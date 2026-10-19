@@ -259,6 +259,9 @@ hr.divider { border: none; border-top: 1px solid var(--c-line); margin: 0; }
 .badge-free { background: var(--c-green-bg); color: var(--c-green); }
 .badge-paid { background: var(--c-accent-bg); color: var(--c-accent); }
 .course-box-title { font-size: 16px; font-weight: 500; margin-bottom: 0.75rem; }
+.course-tax { font-size: 13px; font-weight: 400; color: var(--c-ink-muted); margin-left: 2px; }
+.course-note { font-size: 14px; color: var(--c-ink-muted); margin-top: 1.25rem; }
+.course-subtitle { font-size: 16px; font-weight: 700; margin-top: 2.5rem; }
 .course-list { list-style: none; }
 .course-list li {
   font-size: 14px; color: var(--c-ink-muted); padding: 5px 0;
@@ -269,6 +272,7 @@ hr.divider { border: none; border-top: 1px solid var(--c-line); margin: 0; }
   width: 5px; height: 5px; border-radius: 50%; background: var(--c-line-md);
 }
 .info-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+.course-subtitle + .info-table { margin-top: 0.75rem; }
 .info-table tr { border-bottom: 1px solid var(--c-line); }
 .info-table td { padding: 12px 0; font-size: 14px; vertical-align: top; }
 .info-table td:first-child { color: var(--c-ink-muted); width: 80px; font-size: 14px; }
