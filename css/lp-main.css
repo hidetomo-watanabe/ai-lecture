@@ -333,6 +333,26 @@ footer {
   text-align: center; padding: 2rem;
   font-size: 13px; color: rgba(255,255,255,0.55);
 }
+footer p + p { margin-top: 0.5rem; }
+footer a { color: rgba(255,255,255,0.75); }
+footer a:hover { color: #fff; }
+
+/* ── LEGAL（プライバシーポリシー等） ── */
+.legal { padding: calc(60px + 4rem) 2rem 6rem; }
+.legal .container { max-width: 760px; }
+.legal-lead { font-size: 15px; color: var(--c-ink-muted); line-height: 1.9; margin-bottom: 2.5rem; }
+.legal h2 {
+  font-size: 18px; font-weight: 700; color: var(--c-ink);
+  margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--c-line);
+}
+.legal p, .legal li { font-size: 15px; line-height: 1.9; color: var(--c-ink); }
+.legal p + p { margin-top: 0.75rem; }
+.legal ul { padding-left: 1.25rem; margin: 0.5rem 0 0.75rem; }
+.legal li + li { margin-top: 0.25rem; }
+.legal a { color: var(--c-accent); }
+.legal .info-table { margin-top: 0.5rem; }
+.legal .info-table td:first-child { width: 90px; }
+.legal-date { margin-top: 3rem; color: var(--c-ink-muted) !important; font-size: 14px !important; }
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
@@ -362,6 +382,7 @@ footer {
   }
   .sticky-cta.show { transform: translateY(0); }
   section { padding: 4rem 1.25rem; }
+  .legal { padding: calc(60px + 2.5rem) 1.25rem 4rem; }
   .what-cards { grid-template-columns: 1fr; }
   .course-grid { grid-template-columns: 1fr; }
   .profile-card { flex-direction: column; gap: 1.5rem; }
