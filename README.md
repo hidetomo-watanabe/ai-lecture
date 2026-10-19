@@ -14,6 +14,7 @@ ai-lecture/
 ├── css/
 │   └── lp-main.css ← LPのスタイル
 ├── favicon.svg / favicon.ico / apple-touch-icon.png
+├── ogp.png         ← SNSシェア用画像（1200×630）
 ├── robots.txt
 ├── sitemap.xml
 └── CNAME           ← カスタムドメイン設定
