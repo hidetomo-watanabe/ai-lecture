@@ -42,8 +42,7 @@
     },
     "geoRadius": "20000"
   },
-  "priceRange": "無料相談あり",
-  "openingHours": "Mo-Su 09:00-21:00",
+  "priceRange": "¥0〜¥50,000",
   "founder": {
     "@type": "Person",
     "name": "渡邊英知",
@@ -58,6 +57,46 @@
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "ITが苦手でも大丈夫ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "大丈夫です。難しい設定や専門用語は一切ありません。スマホやPCでLINEのようにチャットができれば使えます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "月額費用が別途かかりますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AIの利用料として月3,000〜5,000円程度が別途かかります。ただし初期の無料プランでも多くの業務に対応できるため、デモ時に確認できます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "松戸市外でも対応してもらえますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "訪問対応は松戸市近郊が中心ですが、オンラインであればエリア問わず対応可能です。まずご相談ください。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "効果がなかった場合はどうなりますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "無料デモで「本当に使えるか」を確認してからご契約いただきます。デモだけで終わっても費用は一切かかりません。"
+      }
+    }
+  ]
+}
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTBNSN6CPC"></script>
 <script>
@@ -66,6 +105,7 @@
   gtag('js', new Date());
   gtag('config', 'G-DTBNSN6CPC');
 </script>
+<script>document.documentElement.classList.add('js');</script>
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -79,18 +119,23 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#"><span>現場</span>のAI</a>
-  <a class="nav-cta" href="#cta">相談してみる</a>
+  <div class="nav-links">
+    <a href="#demo">デモ</a>
+    <a href="#course">料金</a>
+    <a href="#faq">よくある質問</a>
+    <a class="nav-cta" href="#cta">相談してみる</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-grid-bg"></div>
-  <div class="hero-badge">松戸・馬橋 音楽酒場 HAND-CLAP で実際に稼働中</div>
+  <div class="hero-badge">松戸・馬橋 音楽酒場 <span class="nowrap">HAND-CLAP</span>&nbsp;で<wbr>実際に稼働中</div>
   <h1 class="hero-title">
-    あなたのお店で、<br><em>AIは使えていますか？</em>
+    あなたのお店で、<br><em>AIは<wbr>使えていますか？</em>
   </h1>
   <p class="hero-sub">
-    汎用AIをそのまま使っても、品質はバラつく。あなたの店に合わせて設計することで、誰が使っても同じクオリティが出るようになります。
+    汎用AIをそのまま使っても、<wbr>品質はバラつく。<wbr>あなたの店に<wbr>合わせて設計することで、<wbr>誰が使っても<wbr>同じクオリティが<wbr>出るようになります。
   </p>
   <div class="hero-btns">
     <a class="btn-primary" href="#how">どう使っているか見る</a>
@@ -177,13 +222,13 @@
       <p class="section-sub">うちの店で毎日やっていることです。あなたの業種に置き換えてイメージしてみてください。</p>
     </div>
     <div class="reveal">
-      <div class="demo-tabs">
-        <button class="demo-tab active" onclick="switchDemo('excel',this)">ライブ情報 → SNS投稿文</button>
-        <button class="demo-tab" onclick="switchDemo('doc',this)">壁打ち → イベント企画書</button>
+      <div class="demo-tabs" role="tablist" aria-label="デモの種類">
+        <button class="demo-tab active" role="tab" id="tab-excel" aria-controls="dp-excel" aria-selected="true" onclick="switchDemo('excel',this)">ライブ情報 → SNS投稿文</button>
+        <button class="demo-tab" role="tab" id="tab-doc" aria-controls="dp-doc" aria-selected="false" tabindex="-1" onclick="switchDemo('doc',this)">壁打ち → イベント企画書</button>
       </div>
 
       <!-- DEMO 1: Live info to SNS post -->
-      <div class="demo-frame demo-panel active" id="dp-excel">
+      <div class="demo-frame demo-panel active" id="dp-excel" role="tabpanel" aria-labelledby="tab-excel">
         <div class="d-wrap" id="dw1">
           <div class="d-stage-bar">
             <span class="d-dot" id="A0"></span><span class="d-lbl" id="B0">情報を入力</span>
@@ -263,7 +308,7 @@
       </div>
 
       <!-- DEMO 2: Brainstorm to Event Plan -->
-      <div class="demo-frame demo-panel" id="dp-doc">
+      <div class="demo-frame demo-panel" id="dp-doc" role="tabpanel" aria-labelledby="tab-doc">
         <div class="d-wrap" id="dw2">
           <div class="d-stage-bar">
             <span class="d-dot" id="P0"></span><span class="d-lbl" id="Q0">頭の中を話す</span>
@@ -479,6 +524,8 @@
   </div>
 </section>
 
+<a class="sticky-cta" href="#cta">無料で相談してみる</a>
+
 <footer>
   <p>渡邊英知（合同会社WhatHides）　&copy; 2026 WhatHides LLC</p>
 </footer>
@@ -492,13 +539,23 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 /* ─── Demo tab switch ─── */
 function switchDemo(id, btn){
-  document.querySelectorAll('.demo-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.demo-tab').forEach(b=>{
+    b.classList.remove('active'); b.setAttribute('aria-selected','false'); b.tabIndex=-1;
+  });
   document.querySelectorAll('.demo-panel').forEach(p=>p.classList.remove('active'));
-  btn.classList.add('active');
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true'); btn.tabIndex=0;
   document.getElementById('dp-'+id).classList.add('active');
   if(id==='excel'){ eScene=0; eShow(0); }
   if(id==='doc'){ fScene=0; fShow(0); }
 }
+
+/* 左右キーでタブ移動 */
+document.querySelector('.demo-tabs').addEventListener('keydown',e=>{
+  if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight') return;
+  const tabs=[...document.querySelectorAll('.demo-tab')];
+  const next=tabs[(tabs.indexOf(document.activeElement)+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length];
+  next.focus(); next.click();
+});
 
 /* ─── DEMO 1: SNS ─── */
 let eScene=0, eTimers=[];
@@ -552,7 +609,7 @@ function eShow(s){
         const td=document.createElement('td');
         td.textContent=c;
         if(ci===0){td.style.fontWeight='500';td.style.whiteSpace='nowrap';}
-        if(ci===1){td.style.fontSize='12px';td.style.color='#444';}
+        if(ci===1){td.style.fontSize='13px';td.style.color='#444';}
         tr.appendChild(td);
       });
       tb.appendChild(tr);
@@ -629,6 +686,15 @@ document.getElementById('copy-mail').addEventListener('click',e=>{
     .catch(()=>{btn.textContent='コピーできませんでした';})
     .finally(()=>setTimeout(()=>{btn.textContent='アドレスをコピー';},2000));
 });
+
+/* ─── スマホ下部の固定CTA（ヒーローと申し込み欄が見えている間は隠す） ─── */
+const stickyCta=document.querySelector('.sticky-cta');
+const ctaSeen={hero:true,cta:false};
+const ctaObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ ctaSeen[e.target.id]=e.isIntersecting; });
+  stickyCta.classList.toggle('show',!ctaSeen.hero&&!ctaSeen.cta);
+});
+['hero','cta'].forEach(id=>ctaObs.observe(document.getElementById(id)));
 
 /* init */
 eShow(0);
