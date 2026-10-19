@@ -308,7 +308,7 @@
             <div class="d-panel">
               <div class="d-ptitle">生成された企画書（構成）</div>
               <div class="slide-stack">
-                <div class="slide" id="sl0"><div class="slide-hdr sh-p">スライド 1 — コンセプト</div><div class="slide-body"><div class="slide-ttl">夏の夜、音楽とクラフトビールと。</div><ul class="slide-pts"><li>地元ブルワリーとのコラボ企画 / HAND-CLAP 2025夏</li></ul></div></div>
+                <div class="slide" id="sl0"><div class="slide-hdr sh-p">スライド 1 — コンセプト</div><div class="slide-body"><div class="slide-ttl">夏の夜、音楽とクラフトビールと。</div><ul class="slide-pts"><li>地元ブルワリーとのコラボ企画 / HAND-CLAP 2026夏</li></ul></div></div>
                 <div class="slide" id="sl1"><div class="slide-hdr sh-t">スライド 2 — イベント概要</div><div class="slide-body"><div class="slide-ttl">開催概要</div><ul class="slide-pts"><li>日時：8月某日(土) 17:00〜22:00</li><li>場所：音楽酒場HAND-CLAP（松戸・馬橋）</li><li>料金：入場料 + ドリンク別（クラフトビール3種）</li></ul></div></div>
                 <div class="slide" id="sl2"><div class="slide-hdr sh-c">スライド 3 — コンテンツ</div><div class="slide-body"><div class="slide-ttl">当日の構成</div><ul class="slide-pts"><li>17:00〜 開場・クラフトビール提供開始</li><li>18:00〜 ライブ1組目（アコースティック系）</li><li>20:00〜 ライブ2組目（メインジャズ）</li></ul></div></div>
                 <div class="slide" id="sl3"><div class="slide-hdr sh-b">スライド 4 — 準備ステップ</div><div class="slide-body"><div class="slide-ttl">今週中にやること</div><ul class="slide-pts"><li>①地元ブルワリーに打診メール送付</li><li>②出演者2〜3組に声掛け・日程確認</li><li>③SNS告知の第1弾テキストを作成</li></ul></div></div>
@@ -468,7 +468,7 @@
     <p class="section-label">まずは話してみてください</p>
     <h2 class="section-title">「どうしたら<br>いいかわからない」<br>が出発点です</h2>
     <p class="section-sub">まずは無料のヒアリング・デモから。あなたの店に合った設計の進め方をご提案します。</p>
-    <a class="btn-white" href="mailto:hidetomo.watanabe@whathides.co.jp">ヒアリングを申し込む（無料）</a>
+    <a class="btn-white" href="mailto:hidetomo.watanabe@whathides.co.jp?subject=%E3%80%90%E7%8F%BE%E5%A0%B4%E3%81%AEAI%E3%80%91%E7%84%A1%E6%96%99%E3%83%92%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF&amp;body=%E5%BA%97%E5%90%8D%EF%BC%9A%0D%0A%E6%A5%AD%E7%A8%AE%EF%BC%9A%0D%0A%E5%9B%B0%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%81%93%E3%81%A8%EF%BC%9A%0D%0A%E3%81%94%E5%B8%8C%E6%9C%9B%E3%81%AE%E6%97%A5%E6%99%82%E3%83%BB%E5%BD%A2%E5%BC%8F%EF%BC%88%E8%A8%AA%E5%95%8F%EF%BC%8F%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%89%EF%BC%9A%0D%0A">ヒアリングを申し込む（無料）</a>
     <div class="cta-note">hidetomo.watanabe@whathides.co.jp</div>
   </div>
 </section>
@@ -537,7 +537,7 @@ function eShow(s){
     const rows=[
       ['Instagram','🎸【ライブ告知】5/10(土) 19:00〜 山田バンド(ジャズ)がHAND-CLAPに登場！…'],
       ['X (Twitter)','🎶 5/10土 19時〜 ジャズライブ✨ 山田バンド / ¥1,500(1drink込) #松戸 #馬橋'],
-      ['告知文（汎用）','5月10日(土)、音楽酒場HAND-CLAPにてジャズライブを開催します。出演は山田バンド…']
+      ['Facebook','5月10日(土)、音楽酒場HAND-CLAPにてジャズライブを開催します。出演は山田バンド…']
     ];
     const tb=document.getElementById('etbody'); tb.innerHTML='';
     rows.forEach((r,i)=>{
@@ -609,6 +609,11 @@ function fShow(s){
 }
 function fChange(d){ fScene=Math.max(0,Math.min(3,fScene+d)); fShow(fScene); }
 function fReplay(){ fScene=0; fShow(0); }
+
+/* ─── GA: 申し込みクリック計測 ─── */
+document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
+  a.addEventListener('click',()=>gtag('event','generate_lead',{method:'email'}));
+});
 
 /* init */
 eShow(0);

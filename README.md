@@ -1,43 +1,26 @@
-# whathides-site
+# ai-lecture
 
-WhatHides サイト一式。GitHub Pages でそのまま公開できます。
+「現場のAI」（合同会社WhatHides）のLPです。GitHub Pages で公開しています。
+
+公開URL: https://ai-lecture.whathides.co.jp/
 
 ## ディレクトリ構成
 
 ```
-whathides-site/
-├── index.html          ← 元のメインHP（既存ファイルをここに置く）
-├── store/
-│   └── index.html      ← 店舗向けLP
-│                          URL: /store/ または /store/index.html
+ai-lecture/
+├── index.html      ← LP本体（HTML・デモ用JS・構造化データ・GAタグ）
 ├── css/
-│   ├── common.css      ← 共通変数・ナビ・フッター
-│   └── lp-store.css    ← 店舗LP専用スタイル
-└── js/
-    └── (共通JSが必要になったらここに追加)
+│   └── lp-main.css ← LPのスタイル
+├── favicon.svg
+├── robots.txt
+├── sitemap.xml
+└── CNAME           ← カスタムドメイン設定
 ```
 
-## URL構成
+## 計測
 
-| ページ | URL |
-|--------|-----|
-| メインHP | `https://<username>.github.io/<repo>/` |
-| 店舗向けLP | `https://<username>.github.io/<repo>/store/` |
-
-## 新しいLP（業種別）を追加するには
-
-```
-mkdir <業種名>
-# 例: manufacturing/, consulting/
-```
-
-`store/index.html` をコピーして、コピーとCSS参照パスを調整するだけです。
-
-```html
-<!-- store/ の場合 -->
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/lp-store.css">
-```
+Google Analytics（`G-DTBNSN6CPC`）を導入しています。
+申し込みボタン（`mailto:` リンク）のクリックは `generate_lead` イベントとして送信されます。
 
 ## GitHub Pages の設定
 
@@ -45,7 +28,6 @@ mkdir <業種名>
 2. Source を `Deploy from a branch` に設定
 3. Branch: `main`、フォルダ: `/ (root)` を選択して Save
 
-## 既存の index.html を移行する際の注意
+## ページを追加するとき
 
-既存メインHPのCSSに `common.css` と変数名が衝突する場合は、
-`common.css` の変数名（`--c-*`）を任意の名前に変更してください。
+`sitemap.xml` に URL を追加してください。
