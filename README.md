@@ -20,7 +20,7 @@ ai-lecture/
 ## 計測
 
 Google Analytics（`G-DTBNSN6CPC`）を導入しています。
-申し込みボタン（`mailto:` リンク）のクリックは `generate_lead` イベントとして送信されます。
+申し込み導線（メールアプリ・Gmail・アドレスコピー）のクリックは `generate_lead` イベントとして送信され、`method` パラメータ（`email` / `gmail` / `copy`）で経路を区別できます。
 
 ## GitHub Pages の設定
 

@@ -470,7 +470,12 @@
     <p class="section-label">まずは話してみてください</p>
     <h2 class="section-title">「どうしたら<br>いいかわからない」<br>が出発点です</h2>
     <p class="section-sub">まずは無料のヒアリング・デモから。あなたの店に合った設計の進め方をご提案します。</p>
-    <a class="btn-white" href="mailto:hidetomo.watanabe@whathides.co.jp?subject=%E3%80%90%E7%8F%BE%E5%A0%B4%E3%81%AEAI%E3%80%91%E7%84%A1%E6%96%99%E3%83%92%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF&amp;body=%E5%BA%97%E5%90%8D%EF%BC%9A%0D%0A%E6%A5%AD%E7%A8%AE%EF%BC%9A%0D%0A%E5%9B%B0%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%81%93%E3%81%A8%EF%BC%9A%0D%0A%E3%81%94%E5%B8%8C%E6%9C%9B%E3%81%AE%E6%97%A5%E6%99%82%E3%83%BB%E5%BD%A2%E5%BC%8F%EF%BC%88%E8%A8%AA%E5%95%8F%EF%BC%8F%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%89%EF%BC%9A%0D%0A">ヒアリングを申し込む（無料）</a>
+    <a class="btn-white" data-lead="email" href="mailto:hidetomo.watanabe@whathides.co.jp?subject=%E3%80%90%E7%8F%BE%E5%A0%B4%E3%81%AEAI%E3%80%91%E7%84%A1%E6%96%99%E3%83%92%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF&amp;body=%E5%BA%97%E5%90%8D%EF%BC%9A%0D%0A%E6%A5%AD%E7%A8%AE%EF%BC%9A%0D%0A%E5%9B%B0%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%81%93%E3%81%A8%EF%BC%9A%0D%0A%E3%81%94%E5%B8%8C%E6%9C%9B%E3%81%AE%E6%97%A5%E6%99%82%E3%83%BB%E5%BD%A2%E5%BC%8F%EF%BC%88%E8%A8%AA%E5%95%8F%EF%BC%8F%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%89%EF%BC%9A%0D%0A">ヒアリングを申し込む（無料）</a>
+    <div class="cta-alt">
+      <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hidetomo.watanabe@whathides.co.jp&amp;su=%E3%80%90%E7%8F%BE%E5%A0%B4%E3%81%AEAI%E3%80%91%E7%84%A1%E6%96%99%E3%83%92%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF&amp;body=%E5%BA%97%E5%90%8D%EF%BC%9A%0D%0A%E6%A5%AD%E7%A8%AE%EF%BC%9A%0D%0A%E5%9B%B0%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%81%93%E3%81%A8%EF%BC%9A%0D%0A%E3%81%94%E5%B8%8C%E6%9C%9B%E3%81%AE%E6%97%A5%E6%99%82%E3%83%BB%E5%BD%A2%E5%BC%8F%EF%BC%88%E8%A8%AA%E5%95%8F%EF%BC%8F%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%89%EF%BC%9A%0D%0A" target="_blank" rel="noopener" data-lead="gmail">Gmailで送る</a>
+      <span class="cta-alt__sep">｜</span>
+      <button type="button" id="copy-mail" data-lead="copy">アドレスをコピー</button>
+    </div>
     <div class="cta-note">hidetomo.watanabe@whathides.co.jp</div>
   </div>
 </section>
@@ -612,9 +617,18 @@ function fShow(s){
 function fChange(d){ fScene=Math.max(0,Math.min(3,fScene+d)); fShow(fScene); }
 function fReplay(){ fScene=0; fShow(0); }
 
-/* ─── GA: 申し込みクリック計測 ─── */
-document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
-  a.addEventListener('click',()=>gtag('event','generate_lead',{method:'email'}));
+/* ─── GA: 申し込みクリック計測（method: email / gmail / copy） ─── */
+document.querySelectorAll('[data-lead]').forEach(el=>{
+  el.addEventListener('click',()=>gtag('event','generate_lead',{method:el.dataset.lead}));
+});
+
+/* ─── メールアドレスをコピー ─── */
+document.getElementById('copy-mail').addEventListener('click',e=>{
+  const btn=e.currentTarget;
+  navigator.clipboard.writeText('hidetomo.watanabe@whathides.co.jp')
+    .then(()=>{btn.textContent='コピーしました';})
+    .catch(()=>{btn.textContent='コピーできませんでした';})
+    .finally(()=>setTimeout(()=>{btn.textContent='アドレスをコピー';},2000));
 });
 
 /* init */
