@@ -11,7 +11,7 @@ ai-lecture/
 ├── index.html      ← LP本体（HTML・デモ用JS・構造化データ・GAタグ）
 ├── css/
 │   └── lp-main.css ← LPのスタイル
-├── favicon.svg
+├── favicon.svg / favicon.ico / apple-touch-icon.png
 ├── robots.txt
 ├── sitemap.xml
 └── CNAME           ← カスタムドメイン設定
